@@ -1,0 +1,2 @@
+15,30,45,59 * * * * python3 VancraftInfo.py
+15,30,45,59 * * * * ./pull.sh
