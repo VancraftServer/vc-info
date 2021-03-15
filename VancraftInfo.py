@@ -104,8 +104,7 @@ def get_motd(timeout, host, port):
 
 def get_info():
     print('正在收集服务器信息...')
-    dns_response = dns.resolver.resolve('_minecraft._tcp.mc.vancraft.cn',
-                                        'SRV')
+    dns_response = dns.resolver.resolve('_minecraft._tcp.mc.vancraft.cn', 'SRV')
     for i in dns_response.response.answer:
         for j in i.items:
             host = str(j.target).strip('.')
@@ -117,7 +116,8 @@ def get_info():
     print('成功获取到信息：{1}, {0}.'.format(str(info_player_num), info_time))
     print('正在将数据保存至文件...')
     header = True
-    if os.path.exists('vc_info.csv'): header = False
+    if os.path.exists('vc_info.csv'):
+        header = False
     csv_file = open('vc_info.csv', 'a+', newline='')
     csv_writer = csv.DictWriter(csv_file, [
         '时间',
