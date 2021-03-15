@@ -8,7 +8,7 @@ import time
 import dns.resolver
 import csv
 import os
-from matplotlib import pyplot as plt
+# from matplotlib import pyplot as plt
 
 
 def _unpack_varint(sock):
@@ -113,7 +113,7 @@ def get_info():
     info_dict = get_motd(10, host, port)
     info_player_num = info_dict['players']['online']
     info_time = time.strftime('%y/%m/%d-%H:%M', time.localtime())
-    info_useful = {}
+    # info_useful = {}
     print('成功获取到信息：{1}, {0}.'.format(str(info_player_num), info_time))
     print('正在将数据保存至文件...')
     header = True

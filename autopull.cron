@@ -1,2 +1,2 @@
-15,30,45,59 * * * * python3 VancraftInfo.py
-15,30,45,59 * * * * ./pull.sh
+15,30,45,59 * * * * cd /home/pi/vc-info/&&python3 /home/pi/vc-info/VancraftInfo.py
+15,30,45,59 * * * * cd /home/pi/vc-info/&&/home/pi/vc-info/pull.sh
