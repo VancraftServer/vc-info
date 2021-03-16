@@ -130,11 +130,15 @@ def get_info():
         '玩家数': info_player_num,
     })
     csv_file.close()
-    with open('vc_info.json', 'a+') as f:
+    if not os.path.exists('vc_info.json'):
+        with open('vc_info.json', 'w') as f:
+            f.write('{}')
+    with open('vc_info.json', 'r') as f:
         data = json.loads(f.read())
-        date = time.strftime('%y%m%d', time.localtime())
+    with open('vc_info.json', 'w') as f:
+        date = time.strftime('%y/%m/%d', time.localtime())
         if date in data:
-            data[date][len(data[date]) + 1] = {info_time: info_player_num}
+            data[date][len(data[date])] = {info_time: info_player_num}
         else:
             data[date] = [{info_time: info_player_num}]
         json.dump(data, f)
