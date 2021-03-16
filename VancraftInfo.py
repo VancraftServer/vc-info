@@ -138,7 +138,7 @@ def get_info():
     with open('vc_info.json', 'w') as f:
         date = time.strftime('%y/%m/%d', time.localtime())
         if date in data:
-            data[date][len(data[date])] = {info_time: info_player_num}
+            data[date].append({info_time: info_player_num})
         else:
             data[date] = [{info_time: info_player_num}]
         json.dump(data, f)
@@ -167,9 +167,6 @@ def get_info():
 
 
 def main():
-    # scheduler = BlockingScheduler()
-    # scheduler.add_job(get_info, 'interval', minutes=15, jitter=15, id='infomation_collect')
-    # scheduler.start()
     get_info()
 
 
