@@ -130,6 +130,14 @@ def get_info():
         '玩家数': info_player_num,
     })
     csv_file.close()
+    with open('vc_info.json', 'a+') as f:
+        data = json.loads(f.read())
+        date = time.strftime('%y%m%d', time.localtime())
+        if date in data:
+            data[date][len(data[date]) + 1] = {info_time: info_player_num}
+        else:
+            data[date] = [{info_time: info_player_num}]
+        json.dump(data, f)
     print('成功将数据保存至文件.')
     # print('开始绘制数据图表...')
     # csv_file = open('vc_info.csv', 'r')
