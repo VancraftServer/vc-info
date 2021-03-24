@@ -6,7 +6,7 @@ import struct
 import json
 import time
 import dns.resolver
-import csv
+# import csv
 import os
 # from matplotlib import pyplot as plt
 
@@ -115,32 +115,64 @@ def get_info():
     # info_useful = {}
     print('成功获取到信息：{1}, {0}.'.format(str(info_player_num), info_time))
     print('正在将数据保存至文件...')
-    header = True
-    if os.path.exists('vc_info.csv'):
-        header = False
-    csv_file = open('vc_info.csv', 'a+', newline='')
-    csv_writer = csv.DictWriter(csv_file, [
-        '时间',
-        '玩家数',
-    ])
-    if header:
-        csv_writer.writeheader()
-    csv_writer.writerow({
-        '时间': info_time,
-        '玩家数': info_player_num,
-    })
-    csv_file.close()
-    if not os.path.exists('vc_info.json'):
-        with open('vc_info.json', 'w') as f:
-            f.write('{}')
-    with open('vc_info.json', 'r') as f:
+    # header = True
+    # if os.path.exists('vc_info.csv'):
+    #     header = False
+    # csv_file = open('vc_info.csv', 'a+', newline='')
+    # csv_writer = csv.DictWriter(csv_file, [
+    #     '时间',
+    #     '玩家数',
+    # ])
+    # if header:
+    #     csv_writer.writeheader()
+    # csv_writer.writerow({
+    #     '时间': info_time,
+    #     '玩家数': info_player_num,
+    # })
+    # csv_file.close()
+    if not os.path.exists('vc_week_info.json'):
+        with open('vc_week_info.json', 'w') as f:
+            f.write('[]')
+    with open('vc_week_info.json', 'r') as f:
         data = json.loads(f.read())
-    with open('vc_info.json', 'w') as f:
-        date = time.strftime('%y/%m/%d', time.localtime())
-        if date in data:
-            data[date].append({info_time: info_player_num})
+    with open('vc_week_info.json', 'w') as f:
+        # date = time.strftime('%y/%m/%d', time.localtime())
+        week = time.strftime('%y-%W', time.localtime())
+        # print(type(data))
+        if data[0]['week'] == week:
+            data.append({
+                'week': week,
+                'time': info_time,
+                'player_num': info_player_num
+            })
         else:
-            data[date] = [{info_time: info_player_num}]
+            data = [{
+                'week': week,
+                'time': info_time,
+                'player_num': info_player_num
+            }]
+        json.dump(data, f)
+    if not os.path.exists('vc_day_info.json'):
+        with open('vc_day_info.json', 'w') as f:
+            f.write('[]')
+    with open('vc_day_info.json', 'r') as f:
+        data = json.loads(f.read())
+    with open('vc_day_info.json', 'w') as f:
+        date = time.strftime('%y/%m/%d', time.localtime())
+        # week = time.strftime('%y-%W', time.localtime())
+        # print(type(data))
+        if data[0]['date'] == date:
+            data.append({
+                'date': date,
+                'time': info_time,
+                'player_num': info_player_num
+            })
+        else:
+            data = [{
+                'date': date,
+                'time': info_time,
+                'player_num': info_player_num
+            }]
         json.dump(data, f)
     print('成功将数据保存至文件.')
     # print('开始绘制数据图表...')
